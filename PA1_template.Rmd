@@ -22,7 +22,6 @@ library(lubridate)
 library(stringr)
 
 
-
 # Check to see if the activity.csv file is around.
 if(!file.exists("activity.csv"))  {
         
@@ -146,7 +145,7 @@ max_avg_steps <- as.integer(activity.by.interval.avg[activity.by.interval.avg$to
 max_avg_steps_interval <- activity.by.interval.avg[activity.by.interval.avg$total ==                                                                            max(activity.by.interval.avg$total),1]
 
 # the next three lines of code take the time interval corresponding to the max average steps
-# and reformats the interval into a hour:minutes time value on the 24-hour clock
+# and reformats the interval into a hour:minute time value on the 24-hour clock
 
 # change from a dply tbl_df to an integer so str_length can coerce to a character vector
 max_avg_steps_interval <- max_avg_steps_interval[[1]]

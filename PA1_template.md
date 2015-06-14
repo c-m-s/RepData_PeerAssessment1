@@ -21,7 +21,6 @@ library(lubridate)
 library(stringr)
 
 
-
 # Check to see if the activity.csv file is around.
 if(!file.exists("activity.csv"))  {
         
@@ -156,7 +155,7 @@ max_avg_steps <- as.integer(activity.by.interval.avg[activity.by.interval.avg$to
 max_avg_steps_interval <- activity.by.interval.avg[activity.by.interval.avg$total ==                                                                            max(activity.by.interval.avg$total),1]
 
 # the next three lines of code take the time interval corresponding to the max average steps
-# and reformats the interval into a hour:minutes time value on the 24-hour clock
+# and reformats the interval into a hour:minute time value on the 24-hour clock
 
 # change from a dply tbl_df to an integer so str_length can coerce to a character vector
 max_avg_steps_interval <- max_avg_steps_interval[[1]]
@@ -405,10 +404,10 @@ session_details
 ## [5] dplyr_0.4.1     knitr_1.10.5   
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] Rcpp_0.11.6      digest_0.6.8     assertthat_0.1   MASS_7.3-40     
-##  [5] plyr_1.8.2       gtable_0.1.2     DBI_0.3.1        formatR_1.2     
-##  [9] magrittr_1.5     scales_0.2.4     evaluate_0.7     stringi_0.4-1   
-## [13] lazyeval_0.1.10  reshape2_1.4.1   labeling_0.3     proto_0.3-10    
-## [17] tools_3.2.0      munsell_0.4.2    parallel_3.2.0   colorspace_1.2-6
-## [21] memoise_0.2.1
+##  [1] Rcpp_0.11.6      magrittr_1.5     MASS_7.3-40      munsell_0.4.2   
+##  [5] colorspace_1.2-6 plyr_1.8.2       tools_3.2.0      parallel_3.2.0  
+##  [9] gtable_0.1.2     DBI_0.3.1        lazyeval_0.1.10  assertthat_0.1  
+## [13] digest_0.6.8     reshape2_1.4.1   formatR_1.2      memoise_0.2.1   
+## [17] evaluate_0.7     mime_0.3         labeling_0.3     stringi_0.4-1   
+## [21] scales_0.2.4     markdown_0.7.7   proto_0.3-10
 ```

@@ -99,7 +99,7 @@ g <- g + geom_histogram(color="white") +
         xlab("Total Steps Taken In A Day") +
         ylab("Count of Days") +
         scale_y_continuous(breaks=c(0,2,4,6,8,10), labels=c(0,2,4,6,8,10)) +
-        ggtitle("Histogram Showing Count of Days By\nTotal Number of Steps Taken In a Day") +
+        ggtitle("Histogram Showing Count of Days By \nTotal Number of Steps Taken In a Day") +
         geom_rug(aes(total))
 ```
 
@@ -140,7 +140,7 @@ plot(activity.by.interval.avg,
      xlab="5-Minute Interval",
      ylab="Average Number of Steps Taken",
      type="l",
-     main="Average Number of Steps Taken per 5-Minute\nInterval Measured Over 2 Month Period")
+     main="Average Number of Steps Taken per 5-Minute \nInterval Measured Over 2 Month Period")
 ```
 
 ![plot of chunk unnamed-chunk-11](figure/unnamed-chunk-11-1.png) 
@@ -285,7 +285,7 @@ g1 <- g1 + geom_histogram(color="white") +
         xlab("Total Steps Taken In A Day") +
         ylab("Count of Days") +
         scale_y_continuous(breaks=c(0,2,4,6,8,10), labels=c(0,2,4,6,8,10)) +
-        ggtitle("Histogram Showing Count of Days By\nTotal Number of Steps Taken In a Day (Imputed Dataset)") +
+        ggtitle("Histogram Showing Count of Days By \nTotal Number of Steps Taken In a Day (Imputed Dataset)") +
         geom_rug(aes(total))
 ```
 
@@ -373,7 +373,7 @@ g2 <- g2 + geom_line(aes(color=week)) +
                                     1300,1400,1500,1600,1700,1800,1900,2000,2100,2200,2300,2400),
                            labels=c(0,100,200,300,400,500,600,700,800,900,1000,1100,1200,
                                     1300,1400,1500,1600,1700,1800,1900,2000,2100,2200,2300,2400)) +
-        ggtitle("Average Number of Steps Taken per 5-Minute Interval\nMeasured Over 2 Month Period (Imputed Dataset)")
+        ggtitle("Average Number of Steps Taken per 5-Minute Interval \nMeasured Over 2 Month Period (Imputed Dataset)")
 ```
 
 

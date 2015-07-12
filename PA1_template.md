@@ -291,7 +291,6 @@ grid.table(activity2.sum,
 
 
 ```r
-#library(ggplot2)
 g1 <- ggplot(activity2.summed, aes(total))
 g1 <- g1 + geom_histogram(color="white") +
         xlab("Total Steps Taken In A Day") +
@@ -322,9 +321,33 @@ Median Total Steps Taken per Day (Imputed Dataset)
 
 The mean and median of total steps taken per day are the _same_ between the unimputed dataset and the imputed dataset.
 
-The imputed dataset contains 8 more days of step measurements so the histogram of the imputed dataset shows 8 addional days in the counts but follows the same shape (distribution) as the histogram with unimputed data and 8 fewer days of step measurements.
 
-![plot of chunk unnamed-chunk-22](figure/unnamed-chunk-22-1.png) ![plot of chunk unnamed-chunk-22](figure/unnamed-chunk-22-2.png) 
+```r
+# make a quick temp dataframe and add a new column to mark it as from the non-imputed dataset
+activity3.summed <- activity.summed
+activity3.summed$dataset <- c("non-imputed")
+# make a quick temp dataframe and add a new column to mark it as from the imputed dataset
+activity4.summed <- activity2.summed
+activity4.summed$dataset <- c("imputed")
+# put the two dataset summaries together so they can be used a facet of a plot to make it easier to see any 
+# differeneces in the shapes of the two histograms of the two datasets
+activity5.summed <- rbind(activity3.summed, activity4.summed)
+```
+
+
+```r
+g3 <- ggplot(activity5.summed, aes(total, fill=dataset))
+g3 <- g3 + geom_histogram(color="white") +
+        facet_grid(dataset ~ .) +
+        xlab("Total Steps Taken In A Day") +
+        ylab("Count of Days") +
+        scale_y_continuous(breaks=c(0,2,4,6,8,10), labels=c(0,2,4,6,8,10)) +
+        ggtitle("Histograms Showing Count of Days By Total Number \nof Steps Taken In a Day (Imputed and Non-Imputed Datasets)")
+```
+
+The imputed dataset contains 8 more days of step measurements so the histogram of the imputed dataset shows 8 addional days in the counts but pretty closely follows the same shape (distribution) as the histogram with unimputed data and 8 fewer days of step measurements.
+
+![plot of chunk unnamed-chunk-24](figure/unnamed-chunk-24-1.png) 
 
 ## Are there differences in activity patterns between weekdays and weekends?
 
@@ -390,7 +413,7 @@ g2 <- g2 + geom_line(aes(color=week)) +
 ```
 
 
-![plot of chunk unnamed-chunk-25](figure/unnamed-chunk-25-1.png) 
+![plot of chunk unnamed-chunk-27](figure/unnamed-chunk-27-1.png) 
 
 
 ### System Details

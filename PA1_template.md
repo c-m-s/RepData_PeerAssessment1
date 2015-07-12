@@ -61,6 +61,9 @@ activity[,4] <- str_c(str_dup("0", 4 - str_length(activity[,4])),activity[,4])
 # now lubridate has necessary data to generate valid date/time values
 # date field + 4 character interval strings into date_time field
 activity$date_time <- ymd_hm(paste(activity[,2], activity[,4]))
+
+# add an interval counter per day that from 1 to 288 each day
+activity$interval_count <- c(1:288)
 ```
 
 ## What is mean total number of steps taken per day?
@@ -93,7 +96,6 @@ grid.table(activity.sum,
   
 
 ```r
-#library(ggplot2)
 g <- ggplot(activity.summed, aes(total))
 g <- g + geom_histogram(color="white") +
         xlab("Total Steps Taken In A Day") +
@@ -130,17 +132,21 @@ Median Total Steps Taken per Day
 
 ```r
 # the following two lines calculate mean steps by time interval for the following time series plot
-activity.by.interval <- group_by(activity, interval)
-activity.by.interval.avg <- summarise(activity.by.interval, total = mean(steps, na.rm = TRUE))
+activity.by.interval.counter <- group_by(activity, interval_count)
+activity.by.interval.counter.avg <- summarise(activity.by.interval.counter, total = mean(steps, na.rm = TRUE))
 ```
 
 
 ```r
-plot(activity.by.interval.avg, 
+plot(activity.by.interval.counter.avg, 
+     xaxt="n",
      xlab="5-Minute Interval",
      ylab="Average Number of Steps Taken",
-     type="l",
+     type="l", col="red",
      main="Average Number of Steps Taken per 5-Minute \nInterval Measured Over 2 Month Period")
+axis(1,c(1,25,49,73,97,121,145,169,193,217,241,265),labels=c("00:00","02:00","04:00","06:00","08:00",
+                                                             "10:00","12:00","14:00","16:00","18:00",
+                                                             "20:00","22:00"), las=2)
 ```
 
 ![plot of chunk unnamed-chunk-11](figure/unnamed-chunk-11-1.png) 
@@ -149,6 +155,12 @@ plot(activity.by.interval.avg,
   
 
 ```r
+# the following two lines calculate mean steps by time interval (orginally) for the above time series plot.
+# I later changed how I implemented the time series plot but I'm feeling a bit lazy to revamp all of this code too.
+# So these next two lines are needed by the lines that follow them.
+activity.by.interval <- group_by(activity, interval)
+activity.by.interval.avg <- summarise(activity.by.interval, total = mean(steps, na.rm = TRUE))
+
 # find the integer portion of the max average from the averages by time interval
 max_avg_steps <- as.integer(activity.by.interval.avg[activity.by.interval.avg$total ==                                                                            max(activity.by.interval.avg$total),2])
 # use the max avg step value to find which time interval contains that value
@@ -239,7 +251,7 @@ activity.nas.merged <- merge(activity.nas, activity_by_day_of_week_interval.summ
 activity.nas.merged.ordered <- arrange(activity.nas.merged, date_time, interval)
 # remove the old steps field with the NAs, keep the total field that will become the new steps field
 activity.nas.merged.reordered <- select(activity.nas.merged.ordered,
-                                        total, date, interval, interval_string, date_time, day_of_week)
+                                        total, date, interval, interval_string, date_time, interval_count, day_of_week)
 # change the total field name to steps
 activity.nas.merged.reordered <- rename(activity.nas.merged.reordered, steps=total)
 
@@ -312,8 +324,7 @@ The mean and median of total steps taken per day are the _same_ between the unim
 
 The imputed dataset contains 8 more days of step measurements so the histogram of the imputed dataset shows 8 addional days in the counts but follows the same shape (distribution) as the histogram with unimputed data and 8 fewer days of step measurements.
 
-
-
+![plot of chunk unnamed-chunk-22](figure/unnamed-chunk-22-1.png) ![plot of chunk unnamed-chunk-22](figure/unnamed-chunk-22-2.png) 
 
 ## Are there differences in activity patterns between weekdays and weekends?
 
@@ -328,7 +339,7 @@ activity2.weekend <- filter(activity2, day_of_week %in% c("Sat", "Sun"))
 # add a field and push the value of weekend into the new field
 activity2.weekend$week <- "weekend"
 # group these weekend days by interval
-activity2.weekend.interval <- group_by(activity2.weekend, interval)
+activity2.weekend.interval <- group_by(activity2.weekend, interval_count)
 # calculate the mean steps for each of the intervals for these weekend days
 activity2.weekend.interval.avg <- summarise(activity2.weekend.interval, total = mean(steps, na.rm = TRUE))
 # add a field and push the value of weekend into the new field
@@ -339,7 +350,7 @@ activity2.weekday <- filter(activity2, day_of_week %in% c("Mon", "Tues", "Wed", 
 # add a field and push the value of weekday into the new field
 activity2.weekday$week <- "weekday"
 # group these weekday days by interval
-activity2.weekday.interval <- group_by(activity2.weekday, interval)
+activity2.weekday.interval <- group_by(activity2.weekday, interval_count)
 # calculate the mean steps for each of the intervals for these weekday days
 activity2.weekday.interval.avg <- summarise(activity2.weekday.interval, total = mean(steps, na.rm = TRUE))
 # add a field and push the value of weekday into the new field
@@ -362,22 +373,24 @@ activity2.weeks.interval.avg <- transform(activity2.weeks.interval.avg, week = f
   
 
 ```r
-g2 <- ggplot(activity2.weeks.interval.avg, aes(x=interval, y=total, group=week))
+g2 <- ggplot(activity2.weeks.interval.avg, aes(x=interval_count, y=total, group=week))
 g2 <- g2 + geom_line(aes(color=week)) +
         facet_grid(week ~ .) +
         xlab("5-Minute Interval") +
         ylab("Average Number of Steps Taken") +
         theme(legend.title = element_blank()) +
         theme(axis.text.x=element_text(angle=50, vjust=1.0, hjust=1.0)) +
-        scale_x_continuous(breaks=c(0,100,200,300,400,500,600,700,800,900,1000,1100,1200,
-                                    1300,1400,1500,1600,1700,1800,1900,2000,2100,2200,2300,2400),
-                           labels=c(0,100,200,300,400,500,600,700,800,900,1000,1100,1200,
-                                    1300,1400,1500,1600,1700,1800,1900,2000,2100,2200,2300,2400)) +
+        scale_x_continuous(breaks=c(0,13,25,37,49,61,73,85,97,109,121,133,145,
+                                    157,169,181,193,205,217,229,241,253,265,277,289),
+                           labels=c("00:00","01:00","02:00","03:00","04:00","05:00",
+                                    "06:00","07:00","08:00","09:00","10:00","11:00",
+                                    "12:00","13:00","14:00","15:00","16:00","17:00",
+                                    "18:00","19:00","20:00","21:00","22:00","23:00","24:00")) +
         ggtitle("Average Number of Steps Taken per 5-Minute Interval \nMeasured Over 2 Month Period (Imputed Dataset)")
 ```
 
 
-![plot of chunk unnamed-chunk-24](figure/unnamed-chunk-24-1.png) 
+![plot of chunk unnamed-chunk-25](figure/unnamed-chunk-25-1.png) 
 
 
 ### System Details
@@ -390,7 +403,7 @@ session_details
 ```
 ## R version 3.2.0 (2015-04-16)
 ## Platform: x86_64-apple-darwin13.4.0 (64-bit)
-## Running under: OS X 10.10.3 (Yosemite)
+## Running under: OS X 10.10.4 (Yosemite)
 ## 
 ## locale:
 ## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8

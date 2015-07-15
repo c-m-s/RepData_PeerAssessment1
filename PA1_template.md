@@ -1,5 +1,7 @@
 ---
 title: "Reproducible Research: Peer Assessment 1"
+author: "Carl M Smith"
+date: "2015-07-14"
 output: 
   html_document:
     keep_md: true
@@ -90,7 +92,9 @@ grid.table(activity.sum,
            h.even.alpha = 1)
 ```
 
-<img src="figure/unnamed-chunk-6-1.png" title="plot of chunk unnamed-chunk-6" alt="plot of chunk unnamed-chunk-6" style="display: block; margin: auto auto auto 0;" />
+```
+## Error in gtable_table(d, name = "core", fg_params = theme$core$fg_params, : unused arguments (show.rownames = FALSE, show.vlines = TRUE, show.hlines = TRUE, h.odd.alpha = 0.1, h.even.alpha = 1)
+```
 
 *2. If you do not understand the difference between a histogram and a barplot, research the difference between them. Make a histogram of the total number of steps taken each day*  
   
@@ -106,6 +110,11 @@ g <- g + geom_histogram(color="white") +
 ```
 
 
+
+
+```
+## stat_bin: binwidth defaulted to range/30. Use 'binwidth = x' to adjust this.
+```
 
 ![plot of chunk unnamed-chunk-8](figure/unnamed-chunk-8-1.png) 
 
@@ -218,7 +227,9 @@ grid.table(activity.na.by.date.summed,
            h.even.alpha = 1)
 ```
 
-![plot of chunk unnamed-chunk-15](figure/unnamed-chunk-15-1.png) 
+```
+## Error in gtable_table(d, name = "core", fg_params = theme$core$fg_params, : unused arguments (show.rownames = FALSE, show.vlines = TRUE, show.hlines = TRUE, h.odd.alpha = 0.1, h.even.alpha = 1)
+```
   
 It seems that taking the mean for a specific time interval of a specific day of the week and then using that value to replace the corresponding missing value for a specific time interval for a specific day of the week should be minimally acceptable. 
 
@@ -286,7 +297,9 @@ grid.table(activity2.sum,
            h.even.alpha = 1)
 ```
 
-<img src="figure/unnamed-chunk-18-1.png" title="plot of chunk unnamed-chunk-18" alt="plot of chunk unnamed-chunk-18" style="display: block; margin: auto auto auto 0;" />
+```
+## Error in gtable_table(d, name = "core", fg_params = theme$core$fg_params, : unused arguments (show.rownames = FALSE, show.vlines = TRUE, show.hlines = TRUE, h.odd.alpha = 0.1, h.even.alpha = 1)
+```
 
 
 
@@ -301,6 +314,11 @@ g1 <- g1 + geom_histogram(color="white") +
 ```
 
 
+
+
+```
+## stat_bin: binwidth defaulted to range/30. Use 'binwidth = x' to adjust this.
+```
 
 ![plot of chunk unnamed-chunk-20](figure/unnamed-chunk-20-1.png) 
 
@@ -346,6 +364,12 @@ g3 <- g3 + geom_histogram(color="white") +
 ```
 
 The imputed dataset contains 8 more days of step measurements so the histogram of the imputed dataset shows 8 addional days in the counts but pretty closely follows the same shape (distribution) as the histogram with unimputed data and 8 fewer days of step measurements.
+
+
+```
+## stat_bin: binwidth defaulted to range/30. Use 'binwidth = x' to adjust this.
+## stat_bin: binwidth defaulted to range/30. Use 'binwidth = x' to adjust this.
+```
 
 ![plot of chunk unnamed-chunk-24](figure/unnamed-chunk-24-1.png) 
 
@@ -436,14 +460,14 @@ session_details
 ## [8] base     
 ## 
 ## other attached packages:
-## [1] stringr_1.0.0   lubridate_1.3.3 gridExtra_0.9.1 ggplot2_1.0.1  
-## [5] dplyr_0.4.1     knitr_1.10.5   
+## [1] stringr_1.0.0   lubridate_1.3.3 gridExtra_2.0.0 ggplot2_1.0.1  
+## [5] dplyr_0.4.2     knitr_1.10.5   
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] Rcpp_0.11.6      magrittr_1.5     MASS_7.3-40      munsell_0.4.2   
-##  [5] colorspace_1.2-6 plyr_1.8.2       tools_3.2.0      parallel_3.2.0  
-##  [9] gtable_0.1.2     DBI_0.3.1        lazyeval_0.1.10  assertthat_0.1  
-## [13] digest_0.6.8     reshape2_1.4.1   formatR_1.2      memoise_0.2.1   
-## [17] evaluate_0.7     mime_0.3         labeling_0.3     stringi_0.4-1   
-## [21] scales_0.2.4     markdown_0.7.7   proto_0.3-10
+##  [1] Rcpp_0.11.6      digest_0.6.8     assertthat_0.1   MASS_7.3-40     
+##  [5] R6_2.1.0         plyr_1.8.3       gtable_0.1.2     DBI_0.3.1       
+##  [9] formatR_1.2      magrittr_1.5     scales_0.2.5     evaluate_0.7    
+## [13] stringi_0.5-5    lazyeval_0.1.10  reshape2_1.4.1   labeling_0.3    
+## [17] proto_0.3-10     tools_3.2.0      munsell_0.4.2    parallel_3.2.0  
+## [21] colorspace_1.2-6 memoise_0.2.1
 ```

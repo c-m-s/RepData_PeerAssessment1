@@ -81,12 +81,7 @@ activity.sum <- rename(activity.summed, Total_Steps=total, Date=date)
 
 ###Total Number of Steps Taken per Day
 ```{r, echo = TRUE, results='asis', fig.height=18, fig.align='left'}
-grid.table(activity.sum,
-           show.rownames = FALSE,
-           show.vlines = TRUE, 
-           show.hlines = TRUE, 
-           h.odd.alpha = 0.1, 
-           h.even.alpha = 1)
+grid.table(activity.sum)
 ```
 
 *2. If you do not understand the difference between a histogram and a barplot, research the difference between them. Make a histogram of the total number of steps taken each day*  
@@ -104,7 +99,7 @@ g <- g + geom_histogram(color="white") +
 
 
 ```{r, echo = FALSE, results='asis'}
-print(g)
+suppressMessages(print(g))
 ```
 
 *3. Calculate and report the mean and median of the total number of steps taken per day*  
@@ -199,12 +194,7 @@ activity.na.by.date.summed <- select(activity.na.by.date.summed, day_of_week, da
 There are 8 days of completely missing values spread across various days of the week.
 
 ```{r, echo = TRUE, results='asis', fig.height=3}
-grid.table(activity.na.by.date.summed,
-           show.rownames = FALSE,
-           show.vlines = TRUE, 
-           show.hlines = TRUE, 
-           h.odd.alpha = 0.1, 
-           h.even.alpha = 1)
+grid.table(activity.na.by.date.summed)
 ```
   
 It seems that taking the mean for a specific time interval of a specific day of the week and then using that value to replace the corresponding missing value for a specific time interval for a specific day of the week should be minimally acceptable. 
@@ -262,12 +252,7 @@ activity2.sum <- rename(activity2.summed, Total_Steps=total, Date=date)
 
 
 ```{r, echo = TRUE, results='asis', fig.height=18, fig.align='left'}
-grid.table(activity2.sum,
-           show.rownames = FALSE,
-           show.vlines = TRUE, 
-           show.hlines = TRUE, 
-           h.odd.alpha = 0.1, 
-           h.even.alpha = 1)
+grid.table(activity2.sum)
 ```
 
 
@@ -284,7 +269,7 @@ g1 <- g1 + geom_histogram(color="white") +
 
 
 ```{r, echo = FALSE, results='asis'}
-print(g1)
+suppressMessages(print(g1))
 ```
 
 ```{r, echo = TRUE, results='asis'}
@@ -328,7 +313,7 @@ g3 <- g3 + geom_histogram(color="white") +
 The imputed dataset contains 8 more days of step measurements so the histogram of the imputed dataset shows 8 addional days in the counts but pretty closely follows the same shape (distribution) as the histogram with unimputed data and 8 fewer days of step measurements.
 
 ```{r, echo = FALSE, fig.height=7, fig.width=8}
-print(g3)
+suppressMessages(print(g3))
 ```
 
 ## Are there differences in activity patterns between weekdays and weekends?
@@ -394,7 +379,7 @@ g2 <- g2 + geom_line(aes(color=week)) +
 
 
 ```{r, echo = FALSE, fig.width=10, fig.height=7}
-print(g2)
+suppressMessages(print(g2))
 ```
 
 
